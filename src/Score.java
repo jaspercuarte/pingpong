@@ -16,8 +16,8 @@ public class Score extends Rectangle {
         g.setFont(new Font("Monospaced", Font.BOLD, 60));
         
 
-        String scoreOne = String.valueOf(playerOne/10) + String.valueOf(playerOne%10);
-        String scoreTwo = String.valueOf(playerTwo/10) + String.valueOf(playerTwo%10);
+        String scoreOne = (playerOne < 100) ? String.valueOf(playerOne/10) + String.valueOf(playerOne%10): "99";
+        String scoreTwo = (playerTwo < 100) ? String.valueOf(playerTwo/10) + String.valueOf(playerTwo%10): "99";
         
         g.setColor(Color.BLACK);
         g.drawString(scoreOne, (GAME_WIDTH/2)-85 + 2, 50 + 2); 

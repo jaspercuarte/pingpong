@@ -6,9 +6,10 @@ import java.util.Random;
 public class SoundManager {
     private Clip[] hitSounds;
     private Clip scoreSound;
+    private Clip menuMusic; 
     private Random random;
     private float volume = 2.0f;
-    
+
     public SoundManager() {
         random = new Random();
         loadSounds();
@@ -18,7 +19,7 @@ public class SoundManager {
         try {
             hitSounds = new Clip[3];
             for (int i = 0; i < hitSounds.length; i++) {
-                File soundFile = new File("../sfx/hit" + i + ".wav");
+                File soundFile = new File("./sfx/hit" + i + ".wav");
                 if (soundFile.exists()) {
                     AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
                     hitSounds[i] = AudioSystem.getClip();
@@ -29,7 +30,7 @@ public class SoundManager {
                 }
             }
             
-            File scoreFile = new File("../sfx/score.wav");
+            File scoreFile = new File("./sfx/score.wav");
             if (scoreFile.exists()) {
                 AudioInputStream audioIn = AudioSystem.getAudioInputStream(scoreFile);
                 scoreSound = AudioSystem.getClip();
@@ -38,22 +39,52 @@ public class SoundManager {
             } else {
                 System.err.println("Score sound file not found: " + scoreFile.getAbsolutePath());
             }
+
+            File menuFile = new File("./sfx/menu.wav");
+            if (menuFile.exists()) {
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(menuFile);
+                menuMusic = AudioSystem.getClip();
+                menuMusic.open(audioIn);
+                System.out.println("Loaded menu music: " + menuFile.getAbsolutePath());
+            } else {
+                System.err.println("Menu music file not found: " + menuFile.getAbsolutePath());
+            }
+
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.err.println("Error loading sounds: " + e.getMessage());
             e.printStackTrace();
         }
     }
-    
-    public void playHitSound() {
-        if (hitSounds == null || hitSounds.length == 0) return;
+
+    public void playMenuMusic() {
+        if (menuMusic != null) {
+            if (menuMusic.isRunning()) {
+                menuMusic.stop();
+            }
+            menuMusic.setFramePosition(0);
+            menuMusic.loop(Clip.LOOP_CONTINUOUSLY); 
+            menuMusic.start();
+        }
+    }
+
+    public void stopMenuMusic() {
+        if (menuMusic != null && menuMusic.isRunning()) {
+            menuMusic.stop();
+        }
+    }
+
+    public boolean playHitSound() {
+        if (hitSounds == null || hitSounds.length == 0) return false;
         
         if (random.nextFloat() < 0.05f && hitSounds[0] != null) {
             playSound(hitSounds[0]);
+            return true;
         } else {
             int randomIndex = 1 + random.nextInt(hitSounds.length - 1);
             if (hitSounds[randomIndex] != null) {
                 playSound(hitSounds[randomIndex]);
             }
+            return false;
         }
     }
     
@@ -101,6 +132,8 @@ public class SoundManager {
         if (scoreSound != null && scoreSound.isRunning()) {
             scoreSound.stop();
         }
+
+        stopMenuMusic(); 
     }
     
     public void close() {
@@ -116,6 +149,10 @@ public class SoundManager {
         
         if (scoreSound != null) {
             scoreSound.close();
+        }
+
+        if (menuMusic != null) {
+            menuMusic.close();
         }
     }
 }

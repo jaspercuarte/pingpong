@@ -5,17 +5,29 @@ public class Paddle extends Rectangle {
     int id;
     int yVelocity;
     int speed = 10;
+    boolean isSinglePlayer = false;
 
     Paddle(int x, int y, int PADDLE_WIDTH, int PADDLE_HEIGHT, int id) {
         super(x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
         this.id = id;
     }
 
+    Paddle(int x, int y, int PADDLE_WIDTH, int PADDLE_HEIGHT, int id, boolean isSinglePlayer) {
+        super(x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
+        this.id = id;
+        this.isSinglePlayer = isSinglePlayer;
+    }
+
     public void keyPressed(KeyEvent e){
         switch (id) {
             case 1:
-                if (e.getKeyCode() == KeyEvent.VK_W) setYDirection(-speed);
-                if (e.getKeyCode() == KeyEvent.VK_S) setYDirection(speed);
+                if (isSinglePlayer) {
+                    if (e.getKeyCode() == KeyEvent.VK_UP) setYDirection(-speed);
+                    if (e.getKeyCode() == KeyEvent.VK_DOWN) setYDirection(speed);
+                } else {
+                    if (e.getKeyCode() == KeyEvent.VK_W) setYDirection(-speed);
+                    if (e.getKeyCode() == KeyEvent.VK_S) setYDirection(speed);
+                }
                 break;
         
             case 2:
@@ -28,8 +40,13 @@ public class Paddle extends Rectangle {
     public void keyReleased(KeyEvent e){
         switch (id) {
             case 1:
-                if (e.getKeyCode() == KeyEvent.VK_W) setYDirection(0);
-                if (e.getKeyCode() == KeyEvent.VK_S) setYDirection(0);
+                if (isSinglePlayer) {
+                    if (e.getKeyCode() == KeyEvent.VK_UP) setYDirection(0);
+                    if (e.getKeyCode() == KeyEvent.VK_DOWN) setYDirection(0);
+                } else {
+                    if (e.getKeyCode() == KeyEvent.VK_W) setYDirection(0);
+                    if (e.getKeyCode() == KeyEvent.VK_S) setYDirection(0);
+                }
                 break;
         
             case 2:
