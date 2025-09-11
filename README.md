@@ -1,1 +1,60 @@
-# pong
+
+# 🏓pingpong
+
+>GUI-based PingPong game written in Java (Swing).  
+
+>Features both ***single-player*** (with difficulty levels) and ***two-player*** modes.  
+
+>The game includes a special ***Critical Hit System*** for dynamic gameplay.
+
+---
+
+## Features
+
+### Game Modes
+**1 Player Mode**
+    - Bot Difficulty levels: `Easy`, `Medium`, `Hard`
+
+**2 Player Mode**
+    - Play locally with a friend on the same keyboard
+
+---
+### Critical Hit Mechanic
+Each paddle hit has a ***5% chance*** to trigger a ***Critical Hit***
+
+On Critical Hit:
+  - `Ball speed temporarily increases`
+  - `Speed reverts back after that specific hit`
+On the **first paddle hit**:
+  - `Ball speed increases by +8`
+Afterwards:
+  - `Only increments again if a Critical Hit occurs`
+
+---
+### Sound Effect and Music
+  - `Paddle hits and scoring effects`
+  - `Menu with play/exit options`
+
+---
+## Installation & Running
+
+### 1. Clone or Download
+You can either `clone` the repository or [Download ZIP](https://github.com/yourusername/pingpong/archive/refs/heads/main.zip).
+
+```code
+// Clone the repository
+git clone https://github.com/jaspercuarte/pingpong.git
+cd pingpong
+```
+
+### 2. Compile the Source
+
+```code
+javac -d bin src/*.java
+```
+
+### 3. Run the Game
+```code
+java -cp bin Main
+```
+
