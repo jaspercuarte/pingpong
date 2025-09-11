@@ -29,7 +29,8 @@ On the **first paddle hit**:
   - `Ball speed increases by +8`
 
 Afterwards:
-  - `Only increments again if a Critical Hit occurs`
+  - `Increment by 1 every hit by paddle`
+  - `Only increments > 1 again if a Critical Hit occurs`
 
 ---
 ### Sound Effect and Music
