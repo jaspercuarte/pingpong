@@ -1,13 +1,12 @@
 
 # 🏓pingpong
 
->GUI-based PingPong game written in Java (Swing).  
+GUI-based PingPong game written in Java (Swing).  
 
->Features both ***single-player*** (with difficulty levels) and ***two-player*** modes.  
+Features both ***single-player*** (with difficulty levels) and ***two-player*** modes.  
 
->The game includes a special ***Critical Hit System*** for dynamic gameplay.
+The game includes a special ***Critical Hit System*** for dynamic gameplay.
 
----
 
 ## Features
 
@@ -25,8 +24,10 @@ Each paddle hit has a ***5% chance*** to trigger a ***Critical Hit***
 On Critical Hit:
   - `Ball speed temporarily increases`
   - `Speed reverts back after that specific hit`
+
 On the **first paddle hit**:
   - `Ball speed increases by +8`
+
 Afterwards:
   - `Only increments again if a Critical Hit occurs`
 
