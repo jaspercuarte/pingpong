@@ -43,7 +43,6 @@ Afterwards:
 You can either `clone` the repository or [Download ZIP](https://github.com/yourusername/pingpong/archive/refs/heads/main.zip).
 
 ```code
-// Clone the repository
 git clone https://github.com/jaspercuarte/pingpong.git
 cd pingpong
 ```
