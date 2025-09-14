@@ -30,12 +30,21 @@ public class SoundManager {
         player.play(clips.get(Sound.SCORE)); 
     }
 
-    public boolean playHitSound() {
-        int i = (random.nextFloat() < 0.05f) ? 0 : 1 + random.nextInt(2);
-        Sound chosen = Sound.values()[i];
+    public boolean playHitSound(float critChance) {
+        boolean isCrit = random.nextFloat() < critChance; 
+        Sound chosen;
+
+        if (isCrit) {
+            chosen = Sound.HIT0; 
+        } else {
+            int i = 1 + random.nextInt(2);
+            chosen = Sound.values()[i];
+        }
+
         player.play(clips.get(chosen));
-        return chosen == Sound.HIT0;
+        return isCrit;
     }
+
 
     public void stopAllSounds() {
         clips.values().forEach(player::stop);

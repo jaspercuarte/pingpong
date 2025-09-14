@@ -1,15 +1,16 @@
+package ball;
 import java.util.*;
 import java.awt.*;
 
 public class Ball extends Rectangle {
     Random random;
-    int xVelocity;
-    int yVelocity;
-    int initialSpeed = 2;
-    int critBoost = 4;
-    boolean isCritActive = false;
+    public int xVelocity;
+    public int yVelocity;
+    public int initialSpeed = 2;
+    public int critBoost = 4;
+    public boolean isCritActive = false;
 
-    Ball(int x, int y, int width, int height) {
+    public Ball(int x, int y, int width, int height) {
         super(x, y, width, height);
         random = new Random();
 

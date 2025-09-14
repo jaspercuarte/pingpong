@@ -1,7 +1,13 @@
+package game;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import ball.Ball;
+import paddle.PaddleType;
+import paddle.PaddleFactory;
+import paddle.Paddle;
+import score.Score;
 import sound.SoundManager;
 
 import java.util.*;
@@ -9,7 +15,7 @@ import java.util.*;
 public class GamePanel extends JPanel implements Runnable {
 
     boolean isSinglePlayer;
-    Difficulty difficulty;
+    DifficultyType difficulty;
     static final int GAME_WIDTH = 1000;
     static final int GAME_HEIGHT = (int)(GAME_WIDTH*(0.5555));
     static final Dimension SCREEN_SIZE = new Dimension(GAME_WIDTH, GAME_HEIGHT);
@@ -29,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
     boolean paused = false;
     boolean running = true;
 
-    GamePanel(boolean isSinglePlayer, Difficulty difficulty, SoundManager soundManager, GameFrame frame) {
+    GamePanel(boolean isSinglePlayer, DifficultyType difficulty, SoundManager soundManager, GameFrame frame) {
         this.frame = frame;
         this.isSinglePlayer = isSinglePlayer;
         this.difficulty = difficulty;
@@ -52,14 +58,14 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void newPaddle() {
-        paddleOne = new Paddle(0,(GAME_HEIGHT/2)-(PADDLE_HEIGHT/2),PADDLE_WIDTH,PADDLE_HEIGHT,1, isSinglePlayer);
-		paddleTwo = new Paddle(GAME_WIDTH-PADDLE_WIDTH,(GAME_HEIGHT/2)-(PADDLE_HEIGHT/2),PADDLE_WIDTH,PADDLE_HEIGHT,2);
+        paddleOne = PaddleFactory.createPaddle(PaddleType.LUCKY, 0,(GAME_HEIGHT/2)-(PADDLE_HEIGHT/2), PADDLE_WIDTH,PADDLE_HEIGHT, 1, isSinglePlayer);
+        paddleTwo = PaddleFactory.createPaddle(PaddleType.POWER, GAME_WIDTH-PADDLE_WIDTH, (GAME_HEIGHT/2)-(PADDLE_HEIGHT/2), PADDLE_WIDTH,PADDLE_HEIGHT, 2, false);
 
         if (isSinglePlayer) {
             switch (difficulty) {
-                case EASY: paddleTwo.speed = 7; break;
-                case MEDIUM: paddleTwo.speed = 9; break;
-                case HARD: paddleTwo.speed = 11; break;
+                case EASY: paddleTwo.setSpeed(8); break;
+                case MEDIUM: paddleTwo.setSpeed(9);; break;
+                case HARD: paddleTwo.setSpeed(12);; break;
             }
         }
     }
@@ -99,9 +105,9 @@ public class GamePanel extends JPanel implements Runnable {
         int paddleCenter = paddleTwo.y + paddleTwo.height / 2;
 
         if (ball.y < paddleCenter) {
-            paddleTwo.setYDirection(-paddleTwo.speed);
+            paddleTwo.setYDirection(-paddleTwo.getSpeed());
         } else if (ball.y > paddleCenter) {
-            paddleTwo.setYDirection(paddleTwo.speed);
+            paddleTwo.setYDirection(paddleTwo.getSpeed());
         } else {
             paddleTwo.setYDirection(0);
         }
@@ -120,16 +126,18 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (ball.intersects(paddleOne)) {
             ball.xVelocity = Math.abs(ball.xVelocity);
-
-            
             ball.xVelocity += (ball.xVelocity < 4 ? 8 : 1);
-            if (soundManager.playHitSound()) {
+
+            boolean isCrit = soundManager.playHitSound((float)paddleOne.getCritChance());
+            if (isCrit) {
                 ball.activateCrit();
-                System.out.println("Crit(Vx): ("+ball.xVelocity+")");
+                paddleOne.applyCrit(); 
+                ball.xVelocity += paddleOne.getCritSpeedBoost(); 
+                System.out.println("Paddle One Crit hit! Ball speed + " + paddleOne.getCritSpeedBoost());
             } else {
                 ball.deactivateCrit();
+                paddleOne.resetCrit();
             }
-
 
             if (ball.yVelocity > 0) ball.yVelocity++;
             else ball.yVelocity--;
@@ -141,15 +149,18 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (ball.intersects(paddleTwo)) {
             ball.xVelocity = Math.abs(ball.xVelocity);
-
             ball.xVelocity += (ball.xVelocity < 4 ? 8 : 1);
-            if (soundManager.playHitSound()) {
+
+            boolean isCrit = soundManager.playHitSound((float)paddleTwo.getCritChance());
+            if (isCrit) {
                 ball.activateCrit();
-                System.out.println("Crit(Vx): ("+ball.xVelocity+")");
+                paddleTwo.applyCrit();  
+                ball.xVelocity += paddleTwo.getCritSpeedBoost();
+                System.out.println("Paddle Two Crit hit! Ball speed + " + paddleTwo.getCritSpeedBoost());
             } else {
                 ball.deactivateCrit();
+                paddleTwo.resetCrit();
             }
-
 
             if (ball.yVelocity > 0) ball.yVelocity++;
             else ball.yVelocity--;
@@ -160,10 +171,10 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         if (paddleOne.y <= 0) paddleOne.y = 0;
-        if (paddleOne.y >= (GAME_HEIGHT-PADDLE_HEIGHT)) paddleOne.y = GAME_HEIGHT-PADDLE_HEIGHT;
+        if (paddleOne.y + paddleOne.height >= GAME_HEIGHT) paddleOne.y = GAME_HEIGHT - paddleOne.height;
         
         if (paddleTwo.y <= 0) paddleTwo.y = 0;
-        if (paddleTwo.y >= (GAME_HEIGHT-PADDLE_HEIGHT)) paddleTwo.y = GAME_HEIGHT-PADDLE_HEIGHT;
+        if (paddleTwo.y + paddleTwo.height >= GAME_HEIGHT) paddleTwo.y = GAME_HEIGHT-paddleTwo.height;
 
         if (ball.x <= 0) {
             soundManager.playScoreSound();

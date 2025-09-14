@@ -1,4 +1,5 @@
-public enum Difficulty {
+package game;
+public enum DifficultyType {
     EASY,
     MEDIUM,
     HARD;

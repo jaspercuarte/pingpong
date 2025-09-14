@@ -1,21 +1,63 @@
+package paddle;
+
 import java.awt.*;
 import java.awt.event.*;
 
-public class Paddle extends Rectangle {
-    int id;
-    int yVelocity;
-    int speed = 10;
-    boolean isSinglePlayer = false;
+public abstract class Paddle extends Rectangle {
+    protected int id;
+    protected int yVelocity;
+    protected int speed;
+    protected boolean isSinglePlayer = false;
 
-    Paddle(int x, int y, int PADDLE_WIDTH, int PADDLE_HEIGHT, int id) {
+    protected double critChance = 0.05; 
+    protected int critSpeedBoost = 0;
+    protected int tempSpeedBoost = 0;
+
+    public Paddle(int x, int y, int PADDLE_WIDTH, int PADDLE_HEIGHT, int id, int speed) {
         super(x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
         this.id = id;
+        this.speed = speed;
     }
 
-    Paddle(int x, int y, int PADDLE_WIDTH, int PADDLE_HEIGHT, int id, boolean isSinglePlayer) {
+    public Paddle(int x, int y, int PADDLE_WIDTH, int PADDLE_HEIGHT, int id, int speed, boolean isSinglePlayer) {
         super(x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
         this.id = id;
+        this.speed = speed;
         this.isSinglePlayer = isSinglePlayer;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public double getCritChance() { 
+        return critChance; 
+    }
+    public void setCritChance(double critChance) { 
+        this.critChance = critChance; 
+    }
+
+    public int getCritSpeedBoost() { 
+        return critSpeedBoost; 
+    }
+    public void setCritSpeedBoost(int critSpeedBoost) { 
+        this.critSpeedBoost = critSpeedBoost; 
+    }
+
+    public int getCurrentSpeed() {
+        return speed + tempSpeedBoost;
+    }
+
+    public void applyCrit() {
+        tempSpeedBoost = critSpeedBoost; 
+    }
+
+    public void resetCrit() {
+        tempSpeedBoost = 0;
     }
 
     public void keyPressed(KeyEvent e){
@@ -61,17 +103,9 @@ public class Paddle extends Rectangle {
     }
 
     public void move() {
-        y +=yVelocity;
+        y += yVelocity + tempSpeedBoost;
+        resetCrit();
     }
 
-    public void draw(Graphics g) {
-        if (id==1) g.setColor(new Color(225, 225, 225));
-        else g.setColor(new Color(225, 225, 225));
-        g.fillRect(x, y, width, height);
-
-        g.setColor(Color.BLACK);
-        for (int i = 0; i < 5; i++) {
-            g.drawRect(x + i, y + i, width - 2*i, height - 2*i);
-        }
-    }
+    public abstract void draw(Graphics g);
 }

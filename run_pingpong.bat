@@ -6,7 +6,7 @@ echo ####################
 if not exist bin mkdir bin
 
 echo [1/3] Compiling sources...
-javac -d bin src\*.java src\sound\*.java
+javac -d bin src\Main.java src\game\*.java src\sound\*.java src\score\*.java src\ball\*.java src\paddle\*.java src\paddle\variation\*.java
 if errorlevel 1 (
     echo Compilation failed!
     pause

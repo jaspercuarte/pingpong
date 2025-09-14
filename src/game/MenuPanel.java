@@ -1,3 +1,4 @@
+package game;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -102,7 +103,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == onePlayerButton) {
-            Difficulty[] options = Difficulty.values();
+            DifficultyType[] options = DifficultyType.values();
 
             int choice = JOptionPane.showOptionDialog(
                 this,

@@ -1,3 +1,4 @@
+package game;
 import java.awt.*;
 import javax.swing.*;
 
@@ -8,7 +9,7 @@ public class GameFrame extends JFrame {
     GamePanel gamePanel;
     SoundManager soundManager;
 
-    GameFrame() {
+    public GameFrame() {
         this.setTitle("ping_pong");
         this.setResizable(false);
         this.setBackground(new Color(20, 40, 20));
@@ -26,12 +27,12 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    public void startGame(boolean isSinglePlayer, Difficulty difficulty) {
+    public void startGame(boolean isSinglePlayer, DifficultyType difficulty) {
         if (menuPanel != null) this.remove(menuPanel);
         soundManager.stopMenuMusic();
 
         System.out.println("Loading Sound Effects...");
-        SoundManager soundManager = new SoundManager();
+        soundManager = new SoundManager();
         soundManager.setVolume(1.0f);
         
         System.out.println("Loading Sound Effects Successfully Loaded");
@@ -39,6 +40,7 @@ public class GameFrame extends JFrame {
         this.add(gamePanel);
         this.revalidate();
         this.repaint();
+        this.pack();
         gamePanel.requestFocus();
     }
 
@@ -54,6 +56,7 @@ public class GameFrame extends JFrame {
 
         this.revalidate();
         this.repaint();
+        this.pack();
         menuPanel.requestFocus();
     }
 
