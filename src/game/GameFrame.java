@@ -2,6 +2,7 @@ package game;
 import java.awt.*;
 import javax.swing.*;
 
+import paddle.PaddleType;
 import sound.SoundManager;
 
 public class GameFrame extends JFrame {
@@ -27,16 +28,16 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    public void startGame(boolean isSinglePlayer, DifficultyType difficulty) {
+    public void startGame(boolean isSinglePlayer, DifficultyType difficulty, PaddleType paddleOneType, PaddleType paddleTwoType) {
         if (menuPanel != null) this.remove(menuPanel);
         soundManager.stopMenuMusic();
 
         System.out.println("Loading Sound Effects...");
         soundManager = new SoundManager();
         soundManager.setVolume(1.0f);
-        
+
         System.out.println("Loading Sound Effects Successfully Loaded");
-        gamePanel = new GamePanel(isSinglePlayer, difficulty, soundManager, this);
+        gamePanel = new GamePanel(isSinglePlayer, difficulty, paddleOneType, paddleTwoType, soundManager, this);
         this.add(gamePanel);
         this.revalidate();
         this.repaint();

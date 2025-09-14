@@ -22,6 +22,9 @@ public class GamePanel extends JPanel implements Runnable {
     static final int BALL_DIAMETER = 40;
     static final int PADDLE_WIDTH = 25;
     static final int PADDLE_HEIGHT = 100;
+
+    static final int WIN_SCORE = 15;
+
     GameFrame frame;
     SoundManager soundManager;
     Thread gameThread;
@@ -35,11 +38,16 @@ public class GamePanel extends JPanel implements Runnable {
     boolean paused = false;
     boolean running = true;
 
-    GamePanel(boolean isSinglePlayer, DifficultyType difficulty, SoundManager soundManager, GameFrame frame) {
+    PaddleType paddleOneType;
+    PaddleType paddleTwoType;
+
+    GamePanel(boolean isSinglePlayer, DifficultyType difficulty,  PaddleType paddleOneType, PaddleType paddleTwoType, SoundManager soundManager, GameFrame frame) {
         this.frame = frame;
         this.isSinglePlayer = isSinglePlayer;
         this.difficulty = difficulty;
         this.soundManager = soundManager;
+        this.paddleOneType = paddleOneType;
+        this.paddleTwoType = paddleTwoType;
 
         newPaddle();
         newBall();
@@ -58,14 +66,19 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void newPaddle() {
-        paddleOne = PaddleFactory.createPaddle(PaddleType.LUCKY, 0,(GAME_HEIGHT/2)-(PADDLE_HEIGHT/2), PADDLE_WIDTH,PADDLE_HEIGHT, 1, isSinglePlayer);
-        paddleTwo = PaddleFactory.createPaddle(PaddleType.POWER, GAME_WIDTH-PADDLE_WIDTH, (GAME_HEIGHT/2)-(PADDLE_HEIGHT/2), PADDLE_WIDTH,PADDLE_HEIGHT, 2, false);
+        PaddleType p1Type = (paddleOneType != null) ? paddleOneType : PaddleType.DEFAULT;
+        PaddleType p2Type = (paddleTwoType != null) ? paddleTwoType : PaddleType.DEFAULT;
+
+        paddleOne = PaddleFactory.createPaddle(p1Type, 0,(GAME_HEIGHT/2)-(PADDLE_HEIGHT/2), PADDLE_WIDTH,PADDLE_HEIGHT, 1, isSinglePlayer);
+
+        int paddleTwoWidth = PaddleFactory.getWidthForType(p2Type);
+        paddleTwo = PaddleFactory.createPaddle(p2Type, GAME_WIDTH - paddleTwoWidth, (GAME_HEIGHT/2)-(PADDLE_HEIGHT/2), PADDLE_WIDTH,PADDLE_HEIGHT, 2, false);
 
         if (isSinglePlayer) {
             switch (difficulty) {
                 case EASY: paddleTwo.setSpeed(8); break;
-                case MEDIUM: paddleTwo.setSpeed(9);; break;
-                case HARD: paddleTwo.setSpeed(12);; break;
+                case MEDIUM: paddleTwo.setSpeed(9); break;
+                case HARD: paddleTwo.setSpeed(12); break;
             }
         }
     }
@@ -190,6 +203,17 @@ public class GamePanel extends JPanel implements Runnable {
             newPaddle();
             newBall();
             System.out.println("Player 1: " + score.playerOne);
+        }
+
+        if (score.playerOne >= WIN_SCORE) {
+            running = false;
+            JOptionPane.showMessageDialog(this, "Player 1 Wins!");
+            frame.goBackToMenu();
+        }
+        if (score.playerTwo >= WIN_SCORE) {
+            running = false;
+            JOptionPane.showMessageDialog(this, "Player 2 Wins!");
+            frame.goBackToMenu();
         }
     }
 

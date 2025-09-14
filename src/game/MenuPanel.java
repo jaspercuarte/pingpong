@@ -1,9 +1,11 @@
 package game;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import paddle.PaddleType;
 import sound.SoundManager;
 
 public class MenuPanel extends JPanel implements ActionListener {
@@ -116,10 +118,60 @@ public class MenuPanel extends JPanel implements ActionListener {
                 options[0]
             );
 
-            if (choice >= 0) frame.startGame(true, options[choice]);
+            if (choice >= 0) {
+                String[] paddleNames = new String[PaddleType.values().length];
+                for (int i = 0; i < PaddleType.values().length; i++) {
+                    paddleNames[i] = PaddleType.values()[i].name();
+                }
+                String selected = (String) JOptionPane.showInputDialog(
+                    this,
+                    "Select a paddle type:",
+                    "Choose your paddle:",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    paddleNames,
+                    paddleNames[0]
+                );
+                if (selected == null) return;
+                PaddleType playerPaddle = PaddleType.valueOf(selected);
+
+                PaddleType[] paddleTypes = PaddleType.values();
+                PaddleType botPaddle = paddleTypes[new java.util.Random().nextInt(paddleTypes.length)];
+
+                frame.startGame(true, options[choice], playerPaddle, botPaddle);
+            }
         }
+
         if (e.getSource() == twoPlayerButton) {
-            frame.startGame(false, null); 
+            String[] paddleNames = new String[PaddleType.values().length];
+            for (int i = 0; i < PaddleType.values().length; i++) {
+                paddleNames[i] = PaddleType.values()[i].name();
+            }
+            String selected1 = (String) JOptionPane.showInputDialog(
+                this,
+                "Select a paddle type:",
+                "Player 1: Choose your paddle:",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                paddleNames,
+                paddleNames[0]
+            );
+            if (selected1 == null) return;
+            PaddleType p1 = PaddleType.valueOf(selected1);
+
+            String selected2 = (String) JOptionPane.showInputDialog(
+                this,
+                "Select a paddle type:",
+                "Player 2: Choose your paddle:",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                paddleNames,
+                paddleNames[0]
+            );
+            if (selected2 == null) return;
+            PaddleType p2 = PaddleType.valueOf(selected2);
+
+            frame.startGame(false, null, p1, p2);
         }
         if (e.getSource() == aboutButton) {
             JOptionPane.showMessageDialog(

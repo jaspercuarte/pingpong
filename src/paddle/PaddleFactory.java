@@ -12,4 +12,14 @@ public class PaddleFactory {
             default:    return new Default(x, y, width, height, id, isSinglePlayer);
         }
     }
+    public static int getWidthForType(PaddleType type) {
+    switch (type) {
+        case TANK: return 25*3/2;
+        case SWIFT: return 25*3/4;
+        case DEFAULT: return 25;
+        case LUCKY: return 25;
+        case POWER: return 25;
+        default: return 25; 
+    }
+}
 }
