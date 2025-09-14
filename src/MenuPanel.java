@@ -3,6 +3,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import sound.SoundManager;
+
 public class MenuPanel extends JPanel implements ActionListener {
     JButton onePlayerButton, twoPlayerButton, aboutButton, exitButton;
     GameFrame frame;

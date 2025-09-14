@@ -1,6 +1,8 @@
 import java.awt.*;
 import javax.swing.*;
 
+import sound.SoundManager;
+
 public class GameFrame extends JFrame {
     MenuPanel menuPanel;
     GamePanel gamePanel;
