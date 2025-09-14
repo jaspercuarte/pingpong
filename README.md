@@ -1,5 +1,5 @@
 
-# 🏓pingpong`1.0.2`
+# 🏓pingpong `1.0.2`
 
 GUI-based PingPong game written in Java (Swing).  
 
@@ -49,11 +49,11 @@ Afterwards:
 
 --- 
 ### Paddle Variation
-  - `Default` (default critChance, default critPowerBonus, default width, default height, default paddleSpeed) 
-  - `Lucky` (30% critChance, default critPowerBonus, default width, default height, default paddleSpeed)
-  - `Power` (3% critChance, increment12 critPowerBonus, default width, default height, default paddleSpeed)
-  - `Swift` (default critChance, default critPowerBonus, default x 3/4 width, default x 3/4 height, 19 paddleSpeed)
-  - `Tank` (default critChance, default critPowerBonus, default x 3/2 width, default x 3/2 height, 4 paddleSpeed)
+  - `Default` (`default` critChance, `default` critPowerBonus, `default` width, `default` height, `default` paddleSpeed) 
+  - `Lucky` (`30%` critChance, `default` critPowerBonus, `default` width, `default` height, `default` paddleSpeed)
+  - `Power` (`3%` critChance, `12++` critPowerBonus, `default` width, `default` height, `default` paddleSpeed)
+  - `Swift` (`default` critChance, `default` critPowerBonus, `default x 3/4` width, `default x 3/4` height, `19` paddleSpeed)
+  - `Tank` (`default` critChance, `default` critPowerBonus, `default x 3/2` width, `default x 3/2` height, `4` paddleSpeed)
 
 ---
 ## Installation & Running
