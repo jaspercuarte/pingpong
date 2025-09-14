@@ -1,5 +1,5 @@
 
-# 🏓pingpong
+# 🏓pingpong1.0.1
 
 GUI-based PingPong game written in Java (Swing).  
 
@@ -48,14 +48,8 @@ git clone https://github.com/jaspercuarte/pingpong.git
 cd pingpong
 ```
 
-### 2. Compile the Source
-
+### 3. Run the Game with Batch Script
 ```code
-javac -d bin src/*.java
-```
-
-### 3. Run the Game
-```code
-java -cp bin Main
+.\run_pingpong.bat
 ```
 
