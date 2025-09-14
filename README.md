@@ -1,5 +1,5 @@
 
-# 🏓pingpong1.0.1
+# 🏓pingpong1.0.2
 
 GUI-based PingPong game written in Java (Swing).  
 
@@ -38,6 +38,24 @@ Afterwards:
   - `Menu with play/exit options`
 
 ---
+## Recent Changes `1.0.1 -> 1.0.2`
+
+### Default Attributes
+  - `critChance = .05`
+  - `critPowerBonus (critSpeedBoost) = 0`
+  - `width = 25`
+  - `height = 100`
+  - `paddleSpeed = 10`
+
+--- 
+### Paddle Variation
+  - `Default` (default critChance, default critPowerBonus, default width, default height, default paddleSpeed) 
+  - `Lucky` (30% critChance, default critPowerBonus, default width, default height, default paddleSpeed)
+  - `Power` (3% critChance, increment12 critPowerBonus, default width, default height, default paddleSpeed)
+  - `Swift` (default critChance, default critPowerBonus, default*3/4 width, default*3/4 height, 19 paddleSpeed)
+  - `Tank` (default critChance, default critPowerBonus, default*3/2 width, default*3/2 height, 4 paddleSpeed)
+
+---
 ## Installation & Running
 
 ### 1. Clone or Download
@@ -48,7 +66,9 @@ git clone https://github.com/jaspercuarte/pingpong.git
 cd pingpong
 ```
 
-### 3. Run the Game with Batch Script
+### 2. Run the Game with Batch Script (CMD or Windows Powershell)
+Check the batch script for the process (if want to be done manually)
+
 ```code
 .\run_pingpong.bat
 ```
