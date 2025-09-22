@@ -59,10 +59,10 @@ Afterwards:
 ## Installation & Running
 
 ### 1. Clone or Download
-You can either `clone` the repository or [Download ZIP](https://github.com/yourusername/pingpong/archive/refs/heads/main.zip).
+You can either `clone` the repository or [Download ZIP](https://github.com/kuwarte/pingpong/archive/refs/heads/main.zip).
 
 ```code
-git clone https://github.com/jaspercuarte/pingpong.git
+git clone https://github.com/kuwarte/pingpong.git
 cd pingpong
 ```
 
